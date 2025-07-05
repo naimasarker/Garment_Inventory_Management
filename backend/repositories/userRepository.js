@@ -49,3 +49,12 @@ exports.getManagerEmail = () => {
         });
     });
 };
+exports.findById = (id) => {
+    return new Promise((resolve, reject) => {
+        const q = 'SELECT * FROM users WHERE id = ?';
+        db.query(q, [id], (err, results) => {
+            if (err) return reject(err);
+            resolve(results[0]);
+        });
+    });
+};
