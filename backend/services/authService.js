@@ -78,4 +78,20 @@ const verifyMail = async (email, otp) => {
     };
 };
 
-module.exports = { register, login, verifyMail };
+const isUserActive = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) throw new Error('User not found');
+    return user.is_active === 1;
+};
+
+const isUserAdmin = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) throw new Error('User not found');
+    return user.role === 'admin';
+};
+const isUserManager = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) throw new Error('User not found');
+    return user.role === 'manager';
+};
+module.exports = { register, login, verifyMail, isUserActive, isUserAdmin, isUserManager };
