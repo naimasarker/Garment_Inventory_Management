@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2025 at 07:42 AM
+-- Generation Time: Jul 30, 2025 at 08:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,6 +32,14 @@ CREATE TABLE `categories` (
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Formal Shirt'),
+(2, 'T-Shirt');
+
 -- --------------------------------------------------------
 
 --
@@ -44,6 +52,13 @@ CREATE TABLE `products` (
   `category_id` int(11) DEFAULT NULL,
   `sku` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `category_id`, `sku`) VALUES
+(1, 'Formal Shirt', 1, 'FSH-101');
 
 -- --------------------------------------------------------
 
@@ -59,6 +74,15 @@ CREATE TABLE `product_variants` (
   `quantity` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product_variants`
+--
+
+INSERT INTO `product_variants` (`id`, `product_id`, `size`, `color`, `quantity`) VALUES
+(4, 1, 'M', 'Blue', 10),
+(5, 1, 'L', 'Blue', 4),
+(6, 1, 'M', 'White', 8);
+
 -- --------------------------------------------------------
 
 --
@@ -73,6 +97,13 @@ CREATE TABLE `purchase_orders` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `purchase_orders`
+--
+
+INSERT INTO `purchase_orders` (`id`, `po_number`, `status`, `created_by`, `created_at`) VALUES
+(3, 'P1-2025-0001', 'approved', 3, '2025-07-06 02:01:37');
+
 -- --------------------------------------------------------
 
 --
@@ -85,6 +116,14 @@ CREATE TABLE `purchase_order_items` (
   `variant_id` int(11) DEFAULT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `purchase_order_items`
+--
+
+INSERT INTO `purchase_order_items` (`id`, `purchase_order_id`, `variant_id`, `quantity`) VALUES
+(3, 3, 4, 20),
+(4, 3, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -102,6 +141,13 @@ CREATE TABLE `stock_transactions` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `stock_transactions`
+--
+
+INSERT INTO `stock_transactions` (`id`, `variant_id`, `transaction_type`, `quantity`, `performed_by`, `remarks`, `created_at`) VALUES
+(1, 5, 'out', 2, 3, 'Issued for stitching', '2025-07-06 01:21:30');
+
 -- --------------------------------------------------------
 
 --
@@ -112,10 +158,22 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
+  `phn_no` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` enum('admin','manager','staff') DEFAULT NULL,
+  `is_verified` int(11) NOT NULL DEFAULT 0,
+  `verification_token` varchar(6) DEFAULT NULL,
+  `is_active` int(10) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `phn_no`, `password`, `role`, `is_verified`, `verification_token`, `is_active`, `created_at`) VALUES
+(1, 'Farjana Sarker Naima', 'bsse1449@iit.du.ac.bd', '01766656001', '$2b$10$5m.ZYR4BY3sgyqxqAzwwbuZJDbgdHvef1HTDXex8UKyvg7WfzXE3m', 'admin', 1, NULL, 1, '2025-07-05 13:39:10'),
+(3, 'Shaila Sarker', 'farjanasarker203@gmail.com', '01766656001', '$2b$10$Jn4Tdebfb7v4Ts2M/lOceuF3dj6qlUA1hFgzVg63hxuBP4ooyFqrK', 'manager', 1, NULL, 1, '2025-07-05 14:57:03');
 
 --
 -- Indexes for dumped tables
@@ -182,43 +240,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `purchase_orders`
 --
 ALTER TABLE `purchase_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `purchase_order_items`
 --
 ALTER TABLE `purchase_order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stock_transactions`
 --
 ALTER TABLE `stock_transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
