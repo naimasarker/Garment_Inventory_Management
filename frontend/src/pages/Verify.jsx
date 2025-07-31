@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { verifyMail } from '../services/authServices';
 
 function Verify() {
+    const navigate = useNavigate();
     const [form, setForm] = useState({ email: '', otp: '' });
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
@@ -15,8 +17,9 @@ function Verify() {
         try {
             const res = await verifyMail(form);
             if (res.data && res.data.status === 'success') {
-                setMessage('Verification successful! You can now log in.');
+                setMessage('Verification successful!');
                 setSuccess(true);
+                setTimeout(() => navigate('/'), 1500);
             } else {
                 setMessage('Verification failed. Please try again.');
                 setSuccess(false);

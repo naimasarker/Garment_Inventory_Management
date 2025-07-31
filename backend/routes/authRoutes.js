@@ -4,7 +4,7 @@ const {register, login,verifyMail,logout} = require('../controllers/authControll
 
 router.post('/register', register);
 router.post('/login', login);
-router.get('/logout', logout);
+router.post('/logout', logout);
 router.post('/verify', verifyMail); 
 
 module.exports = router;

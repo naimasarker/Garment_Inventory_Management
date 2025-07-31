@@ -1,0 +1,25 @@
+.nav-links {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.nav-link {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+.btn {
+  transition: all 0.3s ease;
+}

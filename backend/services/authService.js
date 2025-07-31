@@ -56,10 +56,11 @@ const verifyMail = async (email, otp) => {
     await userRepo.verifyUser(email);
 
     if (user.role === 'staff') {
-        const ManagerEmail = await userRepo.getAdminEmail();
+        const ManagerEmail = await userRepo.getManagerEmail();
         if (ManagerEmail) {
             const subject = 'New Staff Verified';
-            const content = `A new staff member (${user.fname} ${user.lname}) has been verified. Please review their details.`;
+            // const content = `A new staff member (${user.fname} ${user.lname}) has been verified. Please review their details.`;
+            const content = `A new staff member (${user.name}) has been verified. Please review their details.`;
             await sendMail(ManagerEmail, subject, content);
         }
     }

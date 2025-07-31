@@ -25,7 +25,6 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/purchase-orders" element={<PurchaseOrders />} />
           <Route path="/stock-transactions" element={<StockTransactions />} />
-          <Route path="/users" element={<Users />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/authServices';
 
 function Register() {
@@ -7,9 +8,10 @@ function Register() {
     email: '',
     phn_no: '',
     password: '',
-    role: 'staff' 
+    role: 'staff'
   });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,10 +21,9 @@ function Register() {
     e.preventDefault();
     try {
       const res = await registerUser(form);
-      if (res.data && res.data.message) {
-        setMessage(res.data.message);
-      } else {
-        setMessage('Registration successful! Please check your email for verification.');
+      if (res.data) {
+        setMessage(res.data.message || 'Registration successful! Please check your email for verification.');
+        setTimeout(() => navigate('/verify'), 1500);
       }
     } catch (err) {
       setMessage(
